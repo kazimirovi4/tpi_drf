@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чат с поддержкой</title>
+</head>
+<body>
+    <div class="navbar">
+        <a href="{% url 'home' %}">Главная</a>
+        {% if user.is_authenticated %}
+            Привет, {{ user.username }}!
+
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="background: none; border: none; padding: 0; color: #00f; cursor: pointer;">
+                    Выйти
+                </button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Вход</a> | <a href="{% url 'register' %}">Регистрация</a>
+        {% endif %}
+    </div>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

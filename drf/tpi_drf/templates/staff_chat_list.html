@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Ваши чаты</h2>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if chats %}
+    <ul>
+    {% for chat in chats %}
+        <li><a href="{% url 'staff_chat_detail' chat.uuid %}">{{ chat.uuid }}</a> - {{ chat.status }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>У вас нет активных чатов.</p>
+{% endif %}
+{% endblock %}

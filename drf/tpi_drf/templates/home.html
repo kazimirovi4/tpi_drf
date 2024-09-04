@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Добро пожаловать на страницу поддержки</h1>
+
+<p>Вы можете воспользоваться следующими ссылками:</p>
+
+<ul>
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'chat_list' %}">Ваши чаты</a></li>
+        <li><a href="{% url 'create_chat' %}">Начать новый чат с поддержкой</a></li>
+
+        {% if user.userprofile.is_online %}
+            <li><a href="{% url 'update_status' 'offline' %}">Установить статус "Не в сети"</a></li>
+        {% else %}
+            <li><a href="{% url 'update_status' 'online' %}">Установить статус "В сети"</a></li>
+        {% endif %}
+    {% else %}
+        <li><a href="{% url 'login' %}">Вход</a></li>
+        <li><a href="{% url 'register' %}">Регистрация</a></li>
+    {% endif %}
+    {% if user.is_authenticated and user.is_staff %}
+        <li><a href="{% url 'staff_chat_list' %}">Управление чатами (Администратор)</a></li>
+    {% endif %}
+</ul>
+
+{% endblock %}
